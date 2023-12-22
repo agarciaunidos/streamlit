@@ -69,7 +69,7 @@ def retrieval_answer(query, llm_model, vector_store):
         model_kwargs = {"maxTokens": max_tokens, "temperature": temperature}
         llm = Bedrock(model_id=model_id, region_name=bedrock_region, client=bedrock_client, model_kwargs=model_kwargs)
     elif llm_model == 'GPT-4-1106-preview':
-        llm = OpenAIChat(model_name="gpt-4-1106-preview")
+        llm = OpenAIChat(model_name="gpt-4-1106-preview",openai_api_key = OPENAI_API_KEY)
 
     else:
         return "Invalid LLM model selection."
