@@ -14,7 +14,7 @@
 
 import streamlit as st
 from streamlit.logger import get_logger
-from llm_bedrock import test
+from llm_bedrock import retrieval_answer
 
 LOGGER = get_logger(__name__)
 
