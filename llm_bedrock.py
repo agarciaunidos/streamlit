@@ -15,7 +15,7 @@ import toml
 
 PINECONE_API_KEY = st.secrets.PINECONE_API_KEY
 PINECONE_ENV = st.secrets.PINECONE_ENV
-OPENAI_API_KEY = st.secrets.OPENAI_API_KEY
+openai_api_key = st.secrets.OPENAI_API_KEY
 kendra_index = st.secrets.KENDRA_INDEX
 bedrock_region = st.secrets.AWS_BEDROCK_REGION
 kendra_region = st.secrets.AWS_KENDRA_REGION
@@ -69,7 +69,7 @@ def retrieval_answer(query, llm_model, vector_store):
         model_kwargs = {"maxTokens": max_tokens, "temperature": temperature}
         llm = Bedrock(model_id=model_id, region_name=bedrock_region, client=bedrock_client, model_kwargs=model_kwargs)
     elif llm_model == 'GPT-4-1106-preview':
-        llm = OpenAI(model_name="gpt-4-1106-preview",openai_api_key = OPENAI_API_KEY)
+        llm = OpenAI(openai_api_key = openai_api_key)
 
     else:
         return "Invalid LLM model selection."
