@@ -6,7 +6,7 @@ from langchain.vectorstores import Pinecone
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
 from langchain.embeddings import BedrockEmbeddings
-from langchain.llms import ChatOpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.retrievers import AmazonKendraRetriever
 from langchain.llms.bedrock import Bedrock
 import boto3
