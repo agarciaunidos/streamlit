@@ -3,7 +3,6 @@ numpy
 pandas
 pydeck
 streamlit
-os
 langchain
-pinecone
+pinecone-client
 boto3
