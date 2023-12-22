@@ -19,32 +19,27 @@ LOGGER = get_logger(__name__)
 
 
 def run():
-    st.set_page_config(
-        page_title="Hello",
-        page_icon="👋",
-    )
+  st.title("Education AI Program")
+  st.caption("A Digital Services - Education Project")
 
-    st.write("# Welcome to Streamlit! 👋")
+  if "messages" not in st.session_state:
+      st.session_state["messages"] = [{"role": "assistant", "content": "Ask your query..."}]
 
-    st.sidebar.success("Select a demo above.")
+  for msg in st.session_state.messages:
+      st.chat_message(msg["role"]).write(msg["content"])
 
-    st.markdown(
-        """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
-        **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
-        ### Want to learn more?
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into our [documentation](https://docs.streamlit.io)
-        - Ask a question in our [community
-          forums](https://discuss.streamlit.io)
-        ### See more complex demos
-        - Use a neural net to [analyze the Udacity Self-driving Car Image
-          Dataset](https://github.com/streamlit/demo-self-driving)
-        - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-    """
-    )
+
+  with st.sidebar:
+      llm_model = st.selectbox("Select LLM", ["Anthropic Claude V2", "Amazon Titan Text Express v1", "Ai21 Labs Jurassic-2 Ultra", "GPT-4-1106-preview"])
+      vector_store = st.selectbox("Select Vector DB", ["Pinecone: Highschool democracy", "Pinecone: University of Arizona", "Kendra: Highschool democracy"])
+
+  if prompt := st.chat_input():
+      if len(prompt) > 0:
+          st.info("Your Query: " + prompt)
+          #answer = retrieval_answer(prompt, llm_model)
+          #st.success(answer)
+      else:
+          st.error("Please enter a query.")
 
 
 if __name__ == "__main__":
