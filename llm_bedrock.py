@@ -6,7 +6,7 @@ from langchain.vectorstores import Pinecone
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
 from langchain.embeddings import BedrockEmbeddings
-from langchain.llms import OpenAI
+from langchain.llms import chatOpenAI
 from langchain.retrievers import AmazonKendraRetriever
 from langchain.llms.bedrock import Bedrock
 import boto3
@@ -69,7 +69,7 @@ def retrieval_answer(query, llm_model, vector_store):
         model_kwargs = {"maxTokens": max_tokens, "temperature": temperature}
         llm = Bedrock(model_id=model_id, region_name=bedrock_region, client=bedrock_client, model_kwargs=model_kwargs)
     elif llm_model == 'GPT-4-1106-preview':
-        llm = OpenAI(openai_api_key = openai_api_key)
+        llm = chatOpenAI(openai_api_key = openai_api_key)
 
     else:
         return "Invalid LLM model selection."
