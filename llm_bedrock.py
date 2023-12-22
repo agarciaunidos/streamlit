@@ -25,6 +25,10 @@ temperature = 0.7  # Adjust as needed
 index_pinecone_hsdemocracy  = 'unidosus-edai-hsdemocracy'
 index_pinecone_asu  = 'unidosus-edai-asu'
 
+
+# Setup bedrock
+bedrock_client = boto3.client("bedrock-runtime", region_name="us-east-1")
+
 def get_kendra_doc_retriever():
     
     kendra_client = boto3.client("kendra", kendra_region)
@@ -38,7 +42,7 @@ def get_kendra_doc_retriever():
 
 def embedding_db(index_name):
     # we use the openAI embedding model
-    embeddings = BedrockEmbeddings( region_name="us-east-1")
+    embeddings = BedrockEmbeddings(client=bedrock_client, region_name="us-east-1")
     index_name = 'unidosus-edai-hsdemocracy'
     text_field = "text"
     pinecone.init(
@@ -51,8 +55,6 @@ def embedding_db(index_name):
    
 # Function to retrieve answers
 def retrieval_answer(query, llm_model, vector_store):        
-    bedrock_client = boto3.client("bedrock-runtime", bedrock_region)
-
     # Select the model based on user choice
     if llm_model == 'Anthropic Claude V2':
         model_id = "anthropic.claude-v2"
