@@ -6,3 +6,4 @@ streamlit
 langchain
 pinecone-client
 boto3
+toml
