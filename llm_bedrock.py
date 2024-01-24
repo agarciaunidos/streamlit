@@ -45,16 +45,8 @@ def embedding_db(index_name_param):
 def retrieval_answer(query, llm_model, vector_store):        
     # Select the model based on user choice
     if llm_model == 'Anthropic Claude V2':
-        model_id = "anthropic.claude-v2"
+        model_id = "anthropic.claude-v2:1"
         model_kwargs = {"max_tokens_to_sample": max_tokens, "temperature": temperature}
-        llm = Bedrock(model_id=model_id, region_name=bedrock_region, client=bedrock_client, model_kwargs=model_kwargs)
-    elif llm_model == 'Amazon Titan Text Express v1':
-        model_id = "amazon.titan-text-express-v1"
-        model_kwargs = {"maxTokenCount": max_tokens, "temperature": temperature}
-        llm = Bedrock(model_id=model_id, region_name=bedrock_region, client=bedrock_client, model_kwargs=model_kwargs)
-    elif llm_model == 'Ai21 Labs Jurassic-2 Ultra':
-        model_id = "ai21.j2-ultra-v1"
-        model_kwargs = {"maxTokens": max_tokens, "temperature": temperature}
         llm = Bedrock(model_id=model_id, region_name=bedrock_region, client=bedrock_client, model_kwargs=model_kwargs)
     elif llm_model == 'GPT-4-1106-preview':
         llm = ChatOpenAI(model_name="gpt-4-1106-preview",openai_api_key = openai_api_key)
