@@ -29,27 +29,15 @@ index_pinecone_asu  = 'unidosus-edai-asu'
 # Setup bedrock
 bedrock_client = boto3.client("bedrock-runtime", region_name="us-east-1")
 
-def get_kendra_doc_retriever():
-    
-    kendra_client = boto3.client("kendra", kendra_region)
-    retriever = AmazonKendraRetriever(index_id=kendra_index, top_k=3, client=kendra_client, attribute_filter={
-        'EqualsTo': {
-            'Key': '_language_code',
-            'Value': {'StringValue': 'en'}
-        }
-    }) 
-    return retriever
-
-def embedding_db(index_name):
+def embedding_db(index_name_param):
     # we use the openAI embedding model
     embeddings = BedrockEmbeddings(client=bedrock_client, region_name="us-east-1")
-    index_name = 'unidosus-edai-hsdemocracy'
+    index_name = index_name_param
+    #strat the Pinecone Index
+    pc = pinecone.Pinecone(
+    api_key=PINECONE_API_KEY)
     text_field = "text"
-    pinecone.init(
-        api_key=PINECONE_API_KEY,
-        environment=PINECONE_ENV
-    )
-    index = pinecone.Index(index_name)
+    index = pc.Index(index_name)
     vectorstore = Pinecone(index, embeddings, text_field)
     return vectorstore
    
@@ -81,9 +69,6 @@ def retrieval_answer(query, llm_model, vector_store):
     elif vector_store == 'Pinecone: University of Arizona':
         retriever = embedding_db(index_pinecone_asu)
         source = 'Pinecone'
-    elif vector_store == 'Kendra: Highschool democracy':
-        retriever = get_kendra_doc_retriever()  
-        source = 'Kendra'
     else:
         return "Invalid Vector DB selection."
     #llm = Bedrock(model_id=model_id, region_name=bedrock_region, client=bedrock_client, model_kwargs=model_kwargs)

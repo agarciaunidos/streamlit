@@ -32,7 +32,7 @@ def run():
 
   with st.sidebar:
       llm_model = st.selectbox("Select LLM", ["Anthropic Claude V2", "Amazon Titan Text Express v1", "Ai21 Labs Jurassic-2 Ultra", "GPT-4-1106-preview"])
-      vector_store = st.selectbox("Select Vector DB", ["Pinecone: Highschool democracy", "Pinecone: University of Arizona", "Kendra: Highschool democracy"])
+      vector_store = st.selectbox("Select Vector DB", ["Pinecone: Highschool democracy", "Pinecone: University of Arizona"])
 
   if prompt := st.chat_input():
       if len(prompt) > 0:
