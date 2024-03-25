@@ -44,11 +44,11 @@ def embedding_db(index_name_param):
 # Function to retrieve answers
 def retrieval_answer(query, llm_model, vector_store):        
     # Select the model based on user choice
-    if llm_model == 'Anthropic Claude V2':
+    if llm_model == 'Anthropic Claude 2':
         model_id = "anthropic.claude-v2:1"
         model_kwargs = {"max_tokens_to_sample": max_tokens, "temperature": temperature}
         llm = Bedrock(model_id=model_id, region_name=bedrock_region, client=bedrock_client, model_kwargs=model_kwargs)
-    elif llm_model == 'GPT-4-1106-preview':
+    elif llm_model in('Anthropic Claude','GPT'):
         llm = ChatOpenAI(model_name="gpt-4-1106-preview",openai_api_key = openai_api_key)
 
     else:
